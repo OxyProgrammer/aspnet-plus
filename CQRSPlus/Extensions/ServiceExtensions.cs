@@ -1,4 +1,11 @@
-﻿namespace CQRSPlus.Extensions
+﻿using CQRSPlus.Contracts;
+using CQRSPlus.LoggerService;
+using CQRSPlus.Repository;
+using CQRSPlus.Service;
+using CQRSPlus.Service.Contracts;
+using Microsoft.EntityFrameworkCore;
+
+namespace CQRSPlus.Extensions
 {
     public static class ServiceExtensions
     {
@@ -15,5 +22,18 @@
          services.Configure<IISOptions>(options =>
          {
          });
+
+        public static void ConfigureLoggerService(this IServiceCollection services) =>
+         services.AddSingleton<ILoggerManager, LoggerManager>();
+
+        public static void ConfigureRepositoryManager(this IServiceCollection services) =>
+         services.AddScoped<IRepositoryManager, RepositoryManager>();
+
+        public static void ConfigureServiceManager(this IServiceCollection services) =>
+         services.AddScoped<IServiceManager, ServiceManager>();
+
+        public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
+         services.AddDbContext<RepositoryContext>(opts => opts.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
+
     }
 }
