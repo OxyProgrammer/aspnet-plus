@@ -1,9 +1,9 @@
-﻿using CQRSPlus.Entities.Models;
+﻿using CQRSPlus.Shared.DataTransferObjects;
 
 namespace CQRSPlus.Service.Contracts
 {
     public interface ICompanyService
     {
-        IEnumerable<Company> GetAllCompanies(bool trackChanges);
+        IEnumerable<CompanyDto> GetAllCompanies(bool trackChanges);
     }
 }
