@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CQRSPlus.LoggerService\CQRSPlus.LoggerService.csproj" />
+    <ProjectReference Include="..\CQRSPlus.Presentation\CQRSPlus.Presentation.csproj" />
     <ProjectReference Include="..\CQRSPlus.Repository\CQRSPlus.Repository.csproj" />
     <ProjectReference Include="..\CQRSPlus.Service\CQRSPlus.Service.csproj" />
   </ItemGroup>
