@@ -12,16 +12,8 @@ namespace CQRSPlus.Presentation.Controllers
         [HttpGet]
         public IActionResult GetCompanies()
         {
-            try
-            {
-                var companies =
-                _service.CompanyService.GetAllCompanies(trackChanges: false);
-                return Ok(companies);
-            }
-            catch
-            {
-                return StatusCode(500, "Internal server error");
-            }
+            var companies = _service.CompanyService.GetAllCompanies(trackChanges: false);
+            return Ok(companies);
         }
     }
 }
