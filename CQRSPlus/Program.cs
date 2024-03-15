@@ -1,7 +1,7 @@
 using CQRSPlus;
 using CQRSPlus.Extensions;
-using CQRSPlus.LoggerService;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Mvc;
 using NLog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +17,13 @@ builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+//The following is added to prevent the opinionated validation by the "ApiController" attribute.
+//E.g. An empty post body.
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
+//The following is added to enable custom content type like xml and csv.
 builder.Services.AddControllers(config =>
 {
     config.RespectBrowserAcceptHeader = true;

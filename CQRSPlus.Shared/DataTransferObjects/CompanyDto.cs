@@ -6,5 +6,4 @@
         public string? Name { get; init; }
         public string? FullAddress { get; init; }
     }
-
 }
