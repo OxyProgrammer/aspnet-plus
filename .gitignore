@@ -4,6 +4,7 @@
 
 # Logs
 Logs/
+internal_logs/
 
 # Generated files
 project.lock.json
