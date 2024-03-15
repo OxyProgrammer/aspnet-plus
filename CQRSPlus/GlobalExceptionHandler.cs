@@ -1,4 +1,5 @@
 ﻿using CQRSPlus.Entities.ErrorModel;
+using CQRSPlus.Entities.Exceptions;
 using CQRSPlus.LoggerService;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Net;
@@ -19,11 +20,17 @@ namespace CQRSPlus
             var contextFeature = httpContext.Features.Get<IExceptionHandlerFeature>();
             if (contextFeature != null)
             {
+                httpContext.Response.StatusCode = contextFeature.Error switch
+                {
+                    NotFoundException => StatusCodes.Status404NotFound,
+                    _ => StatusCodes.Status500InternalServerError
+                };
+
                 _logger.LogError($"Something went wrong: {exception.Message}");
                 await httpContext.Response.WriteAsync(new ErrorDetails()
                 {
                     StatusCode = httpContext.Response.StatusCode,
-                    Message = "Internal Server Error.",
+                    Message = contextFeature.Error.Message,
                 }.ToString());
             }
             return true;
