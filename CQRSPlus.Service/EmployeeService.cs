@@ -103,8 +103,7 @@ namespace CQRSPlus.Service
             {
                 throw new CompanyNotFoundException(companyId);
             }
-            var employeeEntity = _repository.Employee.GetEmployee(companyId, id,
-            empTrackChanges);
+            var employeeEntity = _repository.Employee.GetEmployee(companyId, id, empTrackChanges);
             if (employeeEntity is null)
             {
                 throw new EmployeeNotFoundException(companyId);
