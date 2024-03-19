@@ -1,5 +1,6 @@
 using CQRSPlus;
 using CQRSPlus.Extensions;
+using CQRSPlus.Presentation.ActionFilters;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -19,6 +20,8 @@ builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+//Add filters
+builder.Services.AddScoped<ValidationFilterAttribute>();
 //The following is added to prevent the opinionated validation by the "ApiController" attribute.
 //E.g. An empty post body.
 builder.Services.Configure<ApiBehaviorOptions>(options =>
