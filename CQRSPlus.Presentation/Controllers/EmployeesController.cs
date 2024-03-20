@@ -1,8 +1,12 @@
 ﻿using CQRSPlus.Presentation.ActionFilters;
+using CQRSPlus.Presentation.ModelBinders;
 using CQRSPlus.Service.Contracts;
 using CQRSPlus.Shared.DataTransferObjects;
+using CQRSPlus.Shared.RequestFeatures;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace CQRSPlus.Presentation.Controllers
 {
@@ -14,10 +18,11 @@ namespace CQRSPlus.Presentation.Controllers
         public EmployeesController(IServiceManager service) => _service = service;
 
         [HttpGet]
-        public async Task<IActionResult> GetEmployeesForCompany(Guid companyId)
+        public async Task<IActionResult> GetEmployeesForCompany(Guid companyId, [FromQuery] EmployeeParameters employeeParameters)
         {
-            var employees = await _service.EmployeeService.GetEmployeesAsync(companyId, trackChanges: false);
-            return Ok(employees);
+            var pagedResult = await _service.EmployeeService.GetEmployeesAsync(companyId, employeeParameters, trackChanges: false);
+            Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(pagedResult.metaData));
+            return Ok(pagedResult.employees);
         }
 
         [HttpGet("{id:guid}", Name = "GetEmployeeForCompany")]
@@ -33,6 +38,20 @@ namespace CQRSPlus.Presentation.Controllers
         {
             var employeeToReturn = await _service.EmployeeService.CreateEmployeeForCompanyAsync(companyId, employee, trackChanges: false);
             return CreatedAtRoute("GetEmployeeForCompany", new { companyId, id = employeeToReturn.Id }, employeeToReturn);
+        }
+
+        [HttpGet("collection/({ids})", Name = "EmployeeForCompanyCollection")]
+        public async Task<IActionResult> GetEmployeeForCompanyCollection(Guid companyId, [ModelBinder(BinderType = typeof(ArrayModelBinder))] IEnumerable<Guid> ids)
+        {
+            var employees = await _service.EmployeeService.GetEmployeesByIdsAsync(companyId, ids, trackChanges: false);
+            return Ok(employees);
+        }
+
+        [HttpPost("collection")]
+        public async Task<IActionResult> CreateEmployeeForCompanyCollection(Guid companyId, [FromBody] IEnumerable<EmployeeForCreationDto> employeeCollection)
+        {
+            var result = await _service.EmployeeService.CreateEmployeesForCompanyCollectionAsync(companyId, employeeCollection);
+            return CreatedAtRoute("EmployeeForCompanyCollection", new { companyId, ids = result.ids }, result.employees);
         }
 
         [HttpDelete("{id:guid}")]
@@ -61,7 +80,7 @@ namespace CQRSPlus.Presentation.Controllers
             var result = await _service.EmployeeService.GetEmployeeForPatchAsync(companyId, id, compTrackChanges: false, empTrackChanges: true);
             patchDoc.ApplyTo(result.employeeToPatch, ModelState);
             //patchDoc.ApplyTo(result.employeeToPatch);
-            
+
             TryValidateModel(result.employeeToPatch);
 
             if (!ModelState.IsValid)

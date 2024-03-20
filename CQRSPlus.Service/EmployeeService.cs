@@ -5,6 +5,7 @@ using CQRSPlus.Entities.Models;
 using CQRSPlus.LoggerService;
 using CQRSPlus.Service.Contracts;
 using CQRSPlus.Shared.DataTransferObjects;
+using CQRSPlus.Shared.RequestFeatures;
 
 namespace CQRSPlus.Service
 {
@@ -21,12 +22,12 @@ namespace CQRSPlus.Service
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<EmployeeDto>> GetEmployeesAsync(Guid companyId, bool trackChanges)
+        public async Task<(IEnumerable<EmployeeDto> employees, MetaData metaData)> GetEmployeesAsync(Guid companyId, EmployeeParameters employeeParameters, bool trackChanges)
         {
             await CheckIfCompanyExists(companyId, trackChanges);
-            var employeesFromDb = await _repository.Employee.GetEmployeesAsync(companyId, trackChanges);
-            var employeesDto = _mapper.Map<IEnumerable<EmployeeDto>>(employeesFromDb);
-            return employeesDto;
+            var employeesWithMetaData = await _repository.Employee.GetEmployeesAsync(companyId, employeeParameters, trackChanges);
+            var employeesDto = _mapper.Map<IEnumerable<EmployeeDto>>(employeesWithMetaData);
+            return (employees: employeesDto, metaData: employeesWithMetaData.MetaData);
         }
 
         public async Task<EmployeeDto> GetEmployeeAsync(Guid companyId, Guid id, bool trackChanges)
@@ -53,6 +54,38 @@ namespace CQRSPlus.Service
             var employeeForCompany = await GetEmployeeForCompanyAndCheckIfItExists(companyId, id, trackChanges);
             _repository.Employee.DeleteEmployee(employeeForCompany);
             await _repository.SaveAsync();
+        }
+
+        public async Task<IEnumerable<EmployeeDto>> GetEmployeesByIdsAsync(Guid companyId, IEnumerable<Guid> ids, bool trackChanges)
+        {
+            if (ids is null)
+            {
+                throw new IdParametersBadRequestException();
+            }
+            var employeeEntities = await _repository.Employee.GetEmployeesByIdAsync(companyId, ids, trackChanges);
+            if (ids.Count() != employeeEntities.Count())
+            {
+                throw new CollectionByIdsBadRequestException();
+            }
+            var employeesToReturn = _mapper.Map<IEnumerable<EmployeeDto>>(employeeEntities);
+            return employeesToReturn;
+        }
+
+        public async Task<(IEnumerable<EmployeeDto> employees, string ids)> CreateEmployeesForCompanyCollectionAsync(Guid companyId, IEnumerable<EmployeeForCreationDto> employeeCollection)
+        {
+            if (employeeCollection is null)
+            {
+                throw new EmployeeCollectionForCompanyBadRequest();
+            }
+            var employeeEntities = _mapper.Map<IEnumerable<Employee>>(employeeCollection);
+            foreach (var employee in employeeEntities)
+            {
+                _repository.Employee.CreateEmployeeForCompany(companyId, employee);
+            }
+            await _repository.SaveAsync();
+            var employeeCollectionToReturn = _mapper.Map<IEnumerable<EmployeeDto>>(employeeEntities);
+            var ids = string.Join(",", employeeCollectionToReturn.Select(c => c.Id));
+            return (employees: employeeCollectionToReturn, ids: ids);
         }
 
         public async Task UpdateEmployeeForCompanyAsync(Guid companyId, Guid id, EmployeeForUpdateDto employeeForUpdate,

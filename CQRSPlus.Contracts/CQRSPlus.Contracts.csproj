@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CQRSPlus.Entities\CQRSPlus.Entities.csproj" />
+    <ProjectReference Include="..\CQRSPlus.Shared\CQRSPlus.Shared.csproj" />
   </ItemGroup>
 
 </Project>

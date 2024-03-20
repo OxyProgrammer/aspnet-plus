@@ -71,8 +71,7 @@ namespace CQRSPlus.Service
                 _repository.Company.CreateCompany(company);
             }
             await _repository.SaveAsync();
-            var companyCollectionToReturn =
-            _mapper.Map<IEnumerable<CompanyDto>>(companyEntities);
+            var companyCollectionToReturn = _mapper.Map<IEnumerable<CompanyDto>>(companyEntities);
             var ids = string.Join(",", companyCollectionToReturn.Select(c => c.Id));
             return (companies: companyCollectionToReturn, ids: ids);
         }
