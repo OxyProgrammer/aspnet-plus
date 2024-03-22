@@ -1,6 +1,10 @@
 using CQRSPlus;
+using CQRSPlus.Contracts;
 using CQRSPlus.Extensions;
 using CQRSPlus.Presentation.ActionFilters;
+using CQRSPlus.Service.DataShaping;
+using CQRSPlus.Shared.DataTransferObjects;
+using CQRSPlus.Utility;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -20,6 +24,9 @@ builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+//Add data shaper
+builder.Services.AddScoped<IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>();
+
 //Add filters
 builder.Services.AddScoped<ValidationFilterAttribute>();
 //The following is added to prevent the opinionated validation by the "ApiController" attribute.
@@ -48,6 +55,11 @@ builder.Services.AddControllers(config =>
 }).AddXmlDataContractSerializerFormatters()
 .AddCustomCSVFormatter()
 .AddApplicationPart(typeof(CQRSPlus.Presentation.AssemblyReference).Assembly);
+
+//For HATEOS
+builder.Services.AddCustomMediaTypes();
+builder.Services.AddScoped<IEmployeeLinks, EmployeeLinks>();
+builder.Services.AddScoped<ValidateMediaTypeAttribute>();
 
 var app = builder.Build();
 

@@ -25,5 +25,4 @@ namespace CQRSPlus.Presentation.ActionFilters
 
         public void OnActionExecuted(ActionExecutedContext context) { }
     }
-
 }

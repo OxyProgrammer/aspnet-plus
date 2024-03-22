@@ -1,12 +1,15 @@
-﻿using CQRSPlus.Entities.Models;
+﻿using CQRSPlus.Entities.LinkModels;
+using CQRSPlus.Entities.Models;
 using CQRSPlus.Shared.DataTransferObjects;
 using CQRSPlus.Shared.RequestFeatures;
+using System.Dynamic;
 
 namespace CQRSPlus.Service.Contracts
 {
     public interface IEmployeeService
     {
-        Task<(IEnumerable<EmployeeDto> employees, MetaData metaData)> GetEmployeesAsync(Guid companyId, EmployeeParameters employeeParameters, bool trackChanges);
+        //Task<(IEnumerable<ExpandoObject> employees, MetaData metaData)> GetEmployeesAsync(Guid companyId, EmployeeParameters employeeParameters, bool trackChanges);
+        Task<(LinkResponse linkResponse, MetaData metaData)> GetEmployeesAsync(Guid companyId, LinkParameters linkParameters, bool trackChanges);
         Task<EmployeeDto> GetEmployeeAsync(Guid companyId, Guid id, bool trackChanges);
         Task<EmployeeDto> CreateEmployeeForCompanyAsync(Guid companyId, EmployeeForCreationDto employeeForCreation, bool trackChanges);
         Task<IEnumerable<EmployeeDto>> GetEmployeesByIdsAsync(Guid companyId, IEnumerable<Guid> ids, bool trackChanges);

@@ -2,7 +2,6 @@
 using System.Reflection;
 using System.Text;
 using System.Linq.Dynamic.Core;
-using CQRSPlus.Repository.Extensions.Utility;
 
 namespace CQRSPlus.Repository.Extensions
 {
