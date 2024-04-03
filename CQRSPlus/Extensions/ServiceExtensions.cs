@@ -6,6 +6,7 @@ using CQRSPlus.Service.Contracts;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Asp.Versioning;
 
 namespace CQRSPlus.Extensions
 {
@@ -58,6 +59,17 @@ namespace CQRSPlus.Extensions
                     xmlOutputFormatter.SupportedMediaTypes.Add("application/vnd.cqrsplus.apiroot+xml");
                 }
             });
+        }
+
+        public static void ConfigureVersioning(this IServiceCollection services)
+        {
+            services.AddApiVersioning(opt =>
+            {
+                opt.ReportApiVersions = true;
+                opt.AssumeDefaultVersionWhenUnspecified = true;
+                opt.DefaultApiVersion = new ApiVersion(1, 0);
+                opt.ApiVersionReader = new QueryStringApiVersionReader("api-version");
+            }).AddMvc();
         }
     }
 }

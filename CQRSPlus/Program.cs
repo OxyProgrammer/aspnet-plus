@@ -61,6 +61,9 @@ builder.Services.AddCustomMediaTypes();
 builder.Services.AddScoped<IEmployeeLinks, EmployeeLinks>();
 builder.Services.AddScoped<ValidateMediaTypeAttribute>();
 
+//API Versioning
+builder.Services.ConfigureVersioning();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

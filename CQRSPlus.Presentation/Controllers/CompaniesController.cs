@@ -1,22 +1,33 @@
-﻿using CQRSPlus.Presentation.ActionFilters;
+﻿using Asp.Versioning;
+using CQRSPlus.Presentation.ActionFilters;
 using CQRSPlus.Presentation.ModelBinders;
 using CQRSPlus.Service.Contracts;
 using CQRSPlus.Shared.DataTransferObjects;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CQRSPlus.Presentation.Controllers
 {
+    [ApiVersion("1.0")]
     [Route("api/companies")]
     [ApiController]
     public class CompaniesController : ControllerBase
     {
         private readonly IServiceManager _service;
         public CompaniesController(IServiceManager service) => _service = service;
-        [HttpGet]
+
+        [HttpGet(Name = "GetCompanies")]
         public async Task<IActionResult> GetCompanies()
         {
             var companies = await _service.CompanyService.GetAllCompaniesAsync(trackChanges: false);
             return Ok(companies);
+        }
+
+        [HttpOptions]
+        public IActionResult GetCompaniesOptions()
+        {
+            Response.Headers.Append("Allow", "GET, OPTIONS, POST, PUT, DELETE");
+            return Ok();
         }
 
         [HttpGet("{id:guid}", Name = "CompanyById")]
@@ -26,7 +37,7 @@ namespace CQRSPlus.Presentation.Controllers
             return Ok(company);
         }
 
-        [HttpPost]
+        [HttpPost(Name = "CreateCompany")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateCompany([FromBody] CompanyForCreationDto company)
         {
