@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Asp.Versioning;
 using System.Threading.RateLimiting;
+using Microsoft.OpenApi.Models;
 
 namespace CQRSPlus.Extensions
 {
@@ -107,5 +108,23 @@ namespace CQRSPlus.Extensions
                 };
             });
         }
+
+        public static void ConfigureSwagger(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(s =>
+            {
+                s.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "CQRSPlus",
+                    Version = "v1"
+                });
+                s.SwaggerDoc("v2", new OpenApiInfo
+                {
+                    Title = "CQRSPlus",
+                    Version = "v2"
+                });
+            });
+        }
+
     }
 }

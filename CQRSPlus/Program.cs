@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Options;
 using NLog;
+using Microsoft.OpenApi.Models;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -67,6 +69,9 @@ builder.Services.ConfigureVersioning();
 //Rate limiting
 builder.Services.ConfigureRateLimitingOptions();
 
+
+//Swagger
+builder.Services.ConfigureSwagger();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -91,5 +96,13 @@ app.UseCors("CorsPolicy");
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseSwagger();
+app.UseSwaggerUI(s =>
+{
+    s.SwaggerEndpoint("/swagger/v1/swagger.json", "CQRSPlus v1");
+    s.SwaggerEndpoint("/swagger/v2/swagger.json", "CQRSPlus v2");
+});
+
 
 app.Run();
