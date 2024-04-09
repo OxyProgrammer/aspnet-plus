@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Asp.Versioning;
+using System.Threading.RateLimiting;
 
 namespace CQRSPlus.Extensions
 {
@@ -70,6 +71,41 @@ namespace CQRSPlus.Extensions
                 opt.DefaultApiVersion = new ApiVersion(1, 0);
                 opt.ApiVersionReader = new QueryStringApiVersionReader("api-version");
             }).AddMvc();
+        }
+
+        public static void ConfigureRateLimitingOptions(this IServiceCollection services)
+        {
+            services.AddRateLimiter(opt =>
+            {
+                opt.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(context => RateLimitPartition.GetFixedWindowLimiter("GlobalLimiter",
+                partition => new FixedWindowRateLimiterOptions
+                {
+                    AutoReplenishment = true,
+                    PermitLimit = 5,
+                    QueueLimit = 2,
+                    QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
+                    Window = TimeSpan.FromMinutes(1)
+                }));
+                opt.AddPolicy("SpecificPolicy", context => RateLimitPartition.GetFixedWindowLimiter("SpecificLimiter",
+                 partition => new FixedWindowRateLimiterOptions
+                 {
+                     AutoReplenishment = true,
+                     PermitLimit = 3,
+                     Window = TimeSpan.FromSeconds(10)
+                 }));
+                opt.OnRejected = async (context, token) =>
+                {
+                    context.HttpContext.Response.StatusCode = 429;
+                    if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
+                    {
+                        await context.HttpContext.Response.WriteAsync($"Too many requests. Please try again after {retryAfter.TotalSeconds} second(s).", token);
+                    }
+                    else
+                    {
+                        await context.HttpContext.Response.WriteAsync("Too many requests. Please try again later.", token);
+                    }
+                };
+            });
         }
     }
 }

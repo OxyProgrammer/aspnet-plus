@@ -5,6 +5,7 @@ using CQRSPlus.Service.Contracts;
 using CQRSPlus.Shared.DataTransferObjects;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace CQRSPlus.Presentation.Controllers
 {
@@ -16,7 +17,9 @@ namespace CQRSPlus.Presentation.Controllers
         private readonly IServiceManager _service;
         public CompaniesController(IServiceManager service) => _service = service;
 
+        //The "SpecificPolicy" will apply first and then the GlobalRateLimiter will take effect!
         [HttpGet(Name = "GetCompanies")]
+        [EnableRateLimiting("SpecificPolicy")]
         public async Task<IActionResult> GetCompanies()
         {
             var companies = await _service.CompanyService.GetAllCompaniesAsync(trackChanges: false);
@@ -31,6 +34,7 @@ namespace CQRSPlus.Presentation.Controllers
         }
 
         [HttpGet("{id:guid}", Name = "CompanyById")]
+        [DisableRateLimiting]
         public async Task<IActionResult> GetCompany(Guid id)
         {
             var company = await _service.CompanyService.GetCompanyAsync(id, trackChanges: false);

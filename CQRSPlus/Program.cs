@@ -64,6 +64,9 @@ builder.Services.AddScoped<ValidateMediaTypeAttribute>();
 //API Versioning
 builder.Services.ConfigureVersioning();
 
+//Rate limiting
+builder.Services.ConfigureRateLimitingOptions();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -81,6 +84,7 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
     ForwardedHeaders = ForwardedHeaders.All
 });
+app.UseRateLimiter();
 app.UseCors("CorsPolicy");
 
 
