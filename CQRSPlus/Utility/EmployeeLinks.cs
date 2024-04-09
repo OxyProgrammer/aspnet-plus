@@ -1,10 +1,10 @@
-﻿using CQRSPlus.Contracts;
-using CQRSPlus.Entities.LinkModels;
-using CQRSPlus.Entities.Models;
-using CQRSPlus.Shared.DataTransferObjects;
+﻿using ASPNETPlus.Contracts;
+using ASPNETPlus.Entities.LinkModels;
+using ASPNETPlus.Entities.Models;
+using ASPNETPlus.Shared.DataTransferObjects;
 using Microsoft.Net.Http.Headers;
 
-namespace CQRSPlus.Utility
+namespace ASPNETPlus.Utility
 {
     public class EmployeeLinks : IEmployeeLinks
     {

@@ -1,8 +1,8 @@
-﻿using CQRSPlus.Contracts;
-using CQRSPlus.LoggerService;
-using CQRSPlus.Repository;
-using CQRSPlus.Service;
-using CQRSPlus.Service.Contracts;
+﻿using ASPNETPlus.Contracts;
+using ASPNETPlus.LoggerService;
+using ASPNETPlus.Repository;
+using ASPNETPlus.Service;
+using ASPNETPlus.Service.Contracts;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +10,7 @@ using Asp.Versioning;
 using System.Threading.RateLimiting;
 using Microsoft.OpenApi.Models;
 
-namespace CQRSPlus.Extensions
+namespace ASPNETPlus.Extensions
 {
     public static class ServiceExtensions
     {
@@ -51,14 +51,14 @@ namespace CQRSPlus.Extensions
                 var systemTextJsonOutputFormatter = config.OutputFormatters.OfType<SystemTextJsonOutputFormatter>()?.FirstOrDefault();
                 if (systemTextJsonOutputFormatter != null)
                 {
-                    systemTextJsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.cqrsplus.hateoas+json");
-                    systemTextJsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.cqrsplus.apiroot+json");
+                    systemTextJsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.aspnetplus.hateoas+json");
+                    systemTextJsonOutputFormatter.SupportedMediaTypes.Add("application/vnd.aspnetplus.apiroot+json");
                 }
                 var xmlOutputFormatter = config.OutputFormatters.OfType<XmlDataContractSerializerOutputFormatter>()?.FirstOrDefault();
                 if (xmlOutputFormatter != null)
                 {
-                    xmlOutputFormatter.SupportedMediaTypes.Add("application/vnd.cqrsplus.hateoas+xml");
-                    xmlOutputFormatter.SupportedMediaTypes.Add("application/vnd.cqrsplus.apiroot+xml");
+                    xmlOutputFormatter.SupportedMediaTypes.Add("application/vnd.aspnetplus.hateoas+xml");
+                    xmlOutputFormatter.SupportedMediaTypes.Add("application/vnd.aspnetplus.apiroot+xml");
                 }
             });
         }
@@ -115,12 +115,12 @@ namespace CQRSPlus.Extensions
             {
                 s.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "CQRSPlus",
+                    Title = "ASPNETPlus",
                     Version = "v1"
                 });
                 s.SwaggerDoc("v2", new OpenApiInfo
                 {
-                    Title = "CQRSPlus",
+                    Title = "ASPNETPlus",
                     Version = "v2"
                 });
             });

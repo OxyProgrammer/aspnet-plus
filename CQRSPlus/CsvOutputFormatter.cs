@@ -1,9 +1,9 @@
-﻿using CQRSPlus.Shared.DataTransferObjects;
+﻿using ASPNETPlus.Shared.DataTransferObjects;
 using System.Text;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Net.Http.Headers;
 
-namespace CQRSPlus
+namespace ASPNETPlus
 {
     public class CsvOutputFormatter : TextOutputFormatter
     {

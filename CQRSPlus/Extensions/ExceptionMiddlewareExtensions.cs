@@ -1,9 +1,9 @@
-﻿//using CQRSPlus.Entities.ErrorModel;
-//using CQRSPlus.LoggerService;
+﻿//using ASPNETPlus.Entities.ErrorModel;
+//using ASPNETPlus.LoggerService;
 //using Microsoft.AspNetCore.Diagnostics;
 //using System.Net;
 
-namespace CQRSPlus.Extensions
+namespace ASPNETPlus.Extensions
 {
     /*CODE LEFT OUT HERE FOR LEGACY REASONS*/
 

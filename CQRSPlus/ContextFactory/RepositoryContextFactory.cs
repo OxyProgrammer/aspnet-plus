@@ -1,8 +1,8 @@
-﻿using CQRSPlus.Repository;
+﻿using ASPNETPlus.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace CQRSPlus.ContextFactory
+namespace ASPNETPlus.ContextFactory
 {
     public class RepositoryContextFactory : IDesignTimeDbContextFactory<RepositoryContext>
     {
@@ -10,7 +10,7 @@ namespace CQRSPlus.ContextFactory
         {
             var configuration = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json").Build();
             var builder = new DbContextOptionsBuilder<RepositoryContext>().UseSqlServer(configuration.GetConnectionString("sqlConnection"),
-                b => b.MigrationsAssembly("CQRSPlus"));
+                b => b.MigrationsAssembly("ASPNETPlus"));
             return new RepositoryContext(builder.Options);
         }
     }

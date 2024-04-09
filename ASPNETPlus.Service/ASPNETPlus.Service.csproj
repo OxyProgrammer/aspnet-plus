@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ASPNETPlus.Contracts\ASPNETPlus.Contracts.csproj" />
+    <ProjectReference Include="..\ASPNETPlus.LoggerService\ASPNETPlus.LoggerService.csproj" />
+    <ProjectReference Include="..\ASPNETPlus.Service.Contracts\ASPNETPlus.Service.Contracts.csproj" />
+  </ItemGroup>
+
+</Project>

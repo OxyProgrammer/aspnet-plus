@@ -1,10 +1,10 @@
-using CQRSPlus;
-using CQRSPlus.Contracts;
-using CQRSPlus.Extensions;
-using CQRSPlus.Presentation.ActionFilters;
-using CQRSPlus.Service.DataShaping;
-using CQRSPlus.Shared.DataTransferObjects;
-using CQRSPlus.Utility;
+using ASPNETPlus;
+using ASPNETPlus.Contracts;
+using ASPNETPlus.Extensions;
+using ASPNETPlus.Presentation.ActionFilters;
+using ASPNETPlus.Service.DataShaping;
+using ASPNETPlus.Shared.DataTransferObjects;
+using ASPNETPlus.Utility;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
@@ -56,7 +56,7 @@ builder.Services.AddControllers(config =>
     config.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
 }).AddXmlDataContractSerializerFormatters()
 .AddCustomCSVFormatter()
-.AddApplicationPart(typeof(CQRSPlus.Presentation.AssemblyReference).Assembly);
+.AddApplicationPart(typeof(ASPNETPlus.Presentation.AssemblyReference).Assembly);
 
 //For HATEOS
 builder.Services.AddCustomMediaTypes();
@@ -100,8 +100,8 @@ app.MapControllers();
 app.UseSwagger();
 app.UseSwaggerUI(s =>
 {
-    s.SwaggerEndpoint("/swagger/v1/swagger.json", "CQRSPlus v1");
-    s.SwaggerEndpoint("/swagger/v2/swagger.json", "CQRSPlus v2");
+    s.SwaggerEndpoint("/swagger/v1/swagger.json", "ASPNETPlus v1");
+    s.SwaggerEndpoint("/swagger/v2/swagger.json", "ASPNETPlus v2");
 });
 
 

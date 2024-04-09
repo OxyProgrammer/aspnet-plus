@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using CQRSPlus.Entities.Models;
-using CQRSPlus.Shared.DataTransferObjects;
+using ASPNETPlus.Entities.Models;
+using ASPNETPlus.Shared.DataTransferObjects;
 
-namespace CQRSPlus
+namespace ASPNETPlus
 {
     public class MappingProfile : Profile
     {

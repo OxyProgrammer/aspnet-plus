@@ -1,10 +1,10 @@
-﻿using CQRSPlus.Entities.ErrorModel;
-using CQRSPlus.Entities.Exceptions;
-using CQRSPlus.LoggerService;
+﻿using ASPNETPlus.Entities.ErrorModel;
+using ASPNETPlus.Entities.Exceptions;
+using ASPNETPlus.LoggerService;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Net;
 
-namespace CQRSPlus
+namespace ASPNETPlus
 {
     public class GlobalExceptionHandler : IExceptionHandler
     {
