@@ -1,9 +1,0 @@
-﻿namespace CQRSPlus.Service.Contracts
-{
-    public interface IServiceManager
-    {
-        ICompanyService CompanyService { get; }
-        IEmployeeService EmployeeService { get; }
-    }
-
-}
