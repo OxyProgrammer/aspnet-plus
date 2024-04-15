@@ -135,7 +135,7 @@ namespace ASPNETPlus.Extensions
                 try
                 {
                     var dbContext = scope.ServiceProvider.GetRequiredService<RepositoryContext>();
-                    dbContext.Database.Migrate();
+                    dbContext.Database.EnsureCreated();
 
                     if (dbContext.Companies != null && dbContext.Companies.Any())
                     {
@@ -195,9 +195,8 @@ namespace ASPNETPlus.Extensions
                 }
                 catch (Exception ex)
                 {
-
+                    Console.WriteLine($"Error While creating and seeding db : {ex}");
                 }
-
             }
         }
     }
