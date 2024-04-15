@@ -8,12 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="internal_logs\**" />
+    <Compile Remove="Migrations\**" />
+    <Content Remove="internal_logs\**" />
+    <Content Remove="Migrations\**" />
+    <EmbeddedResource Remove="internal_logs\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <None Remove="internal_logs\**" />
+    <None Remove="Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.3">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
@@ -22,11 +29,6 @@
     <ProjectReference Include="..\ASPNETPlus.Presentation\ASPNETPlus.Presentation.csproj" />
     <ProjectReference Include="..\ASPNETPlus.Repository\ASPNETPlus.Repository.csproj" />
     <ProjectReference Include="..\ASPNETPlus.Service\ASPNETPlus.Service.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="internal_logs\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

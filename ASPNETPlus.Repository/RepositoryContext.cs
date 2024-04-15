@@ -1,5 +1,4 @@
 ﻿using ASPNETPlus.Entities.Models;
-using ASPNETPlus.Repository.Configuration;
 using Microsoft.EntityFrameworkCore;
 
 namespace ASPNETPlus.Repository
@@ -13,8 +12,7 @@ namespace ASPNETPlus.Repository
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new CompanyConfiguration());
-            modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
+            base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Company>? Companies { get; set; }
