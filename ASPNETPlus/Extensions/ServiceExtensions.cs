@@ -10,6 +10,8 @@ using Asp.Versioning;
 using System.Threading.RateLimiting;
 using Microsoft.OpenApi.Models;
 using ASPNETPlus.Entities.Models;
+using Polly;
+using Polly.Retry;
 
 namespace ASPNETPlus.Extensions
 {
@@ -132,8 +134,13 @@ namespace ASPNETPlus.Extensions
             var serviceProvider = services.BuildServiceProvider();
             using (var scope = serviceProvider.CreateScope())
             {
-                try
+                var retryPolicy = Policy.Handle<Exception>()
+                         .WaitAndRetry(5, retryAttempt => TimeSpan.FromSeconds(30));
+                var retryCount = 1;
+                retryPolicy.Execute(() =>
                 {
+                    Console.WriteLine($"Trying for {retryCount} time.");
+
                     var dbContext = scope.ServiceProvider.GetRequiredService<RepositoryContext>();
                     dbContext.Database.EnsureCreated();
 
@@ -142,62 +149,61 @@ namespace ASPNETPlus.Extensions
                         Console.WriteLine("Already have data - no need to seed.");
                         return;
                     }
-                    //Seed data.
-                    var seedCompanies = new Company[]
-                    {
-                        new Company
-                        {
-                            Id = new Guid("c9d4c053-49b6-410c-bc78-2d54a9991870"),
-                            Name = "IT_Solutions Ltd",
-                            Address = "583 Wall Dr. Gwynn Oak, MD 21207",
-                            Country = "USA"
-                        },
-                        new Company
-                        {
-                            Id = new Guid("3d490a70-94ce-4d15-9494-5248280c2ce3"),
-                            Name = "Admin_Solutions Ltd",
-                            Address = "312 Forest Avenue, BF 923",
-                            Country = "USA"
-                        }
-                    };
-
-                    var seedEmployees = new Employee[]
-                    {
-                        new Employee
-                        {
-                            Id = new Guid("80abbca8-664d-4b20-b5de-024705497d4a"),
-                            Name = "Sam Raiden",
-                            Age = 26,
-                            Position = "Software developer",
-                            CompanyId = new Guid("c9d4c053-49b6-410c-bc78-2d54a9991870")
-                        },
-                        new Employee
-                        {
-                            Id = new Guid("86dba8c0-d178-41e7-938c-ed49778fb52a"),
-                            Name = "Jana McLeaf",
-                            Age = 30,
-                            Position = "Software developer",
-                            CompanyId = new Guid("c9d4c053-49b6-410c-bc78-2d54a9991870")
-                        },
-                        new Employee
-                        {
-                            Id = new Guid("021ca3c1-0deb-4afd-ae94-2159a8479811"),
-                            Name = "Kane Miller",
-                            Age = 35,
-                            Position = "Administrator",
-                            CompanyId = new Guid("3d490a70-94ce-4d15-9494-5248280c2ce3")
-                        }
-                    };
-
-                    dbContext.Companies.AddRange(seedCompanies);
-                    dbContext.Employees.AddRange(seedEmployees);
-                    dbContext.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Error While creating and seeding db : {ex}");
-                }
+                    SeedData(dbContext);
+                });
             }
+        }
+
+        private static void SeedData(RepositoryContext dbContext)
+        {
+            var seedCompanies = new Company[]
+            {
+                new Company
+                {
+                    Id = new Guid("c9d4c053-49b6-410c-bc78-2d54a9991870"),
+                    Name = "IT_Solutions Ltd",
+                    Address = "583 Wall Dr. Gwynn Oak, MD 21207",
+                    Country = "USA"
+                },
+                new Company
+                {
+                    Id = new Guid("3d490a70-94ce-4d15-9494-5248280c2ce3"),
+                    Name = "Admin_Solutions Ltd",
+                    Address = "312 Forest Avenue, BF 923",
+                    Country = "USA"
+                }
+            };
+            var seedEmployees = new Employee[]
+            {
+                new Employee
+                {
+                    Id = new Guid("80abbca8-664d-4b20-b5de-024705497d4a"),
+                    Name = "Sam Raiden",
+                    Age = 26,
+                    Position = "Software developer",
+                    CompanyId = new Guid("c9d4c053-49b6-410c-bc78-2d54a9991870")
+                },
+                new Employee
+                {
+                    Id = new Guid("86dba8c0-d178-41e7-938c-ed49778fb52a"),
+                    Name = "Jana McLeaf",
+                    Age = 30,
+                    Position = "Software developer",
+                    CompanyId = new Guid("c9d4c053-49b6-410c-bc78-2d54a9991870")
+                },
+                new Employee
+                {
+                    Id = new Guid("021ca3c1-0deb-4afd-ae94-2159a8479811"),
+                    Name = "Kane Miller",
+                    Age = 35,
+                    Position = "Administrator",
+                    CompanyId = new Guid("3d490a70-94ce-4d15-9494-5248280c2ce3")
+                }
+            };
+
+            dbContext.Companies.AddRange(seedCompanies);
+            dbContext.Employees.AddRange(seedEmployees);
+            dbContext.SaveChanges();
         }
     }
 }
