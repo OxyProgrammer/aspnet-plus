@@ -11,7 +11,6 @@ using System.Threading.RateLimiting;
 using Microsoft.OpenApi.Models;
 using ASPNETPlus.Entities.Models;
 using Polly;
-using Polly.Retry;
 
 namespace ASPNETPlus.Extensions
 {
