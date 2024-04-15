@@ -26,10 +26,10 @@ namespace ASPNETPlus.Extensions
                  .WithExposedHeaders("X-Pagination"));
              });
 
-        public static void ConfigureIISIntegration(this IServiceCollection services) =>
-         services.Configure<IISOptions>(options =>
-         {
-         });
+        //public static void ConfigureIISIntegration(this IServiceCollection services) =>
+        // services.Configure<IISOptions>(options =>
+        // {
+        // });
 
         public static void ConfigureLoggerService(this IServiceCollection services) =>
          services.AddSingleton<ILoggerManager, LoggerManager>();
@@ -135,12 +135,13 @@ namespace ASPNETPlus.Extensions
             {
                 var retryPolicy = Policy.Handle<Exception>()
                          .WaitAndRetry(5, retryAttempt => TimeSpan.FromSeconds(30));
-                var retryCount = 1;
+                var retryCount = 0;
                 retryPolicy.Execute(() =>
                 {
-                    Console.WriteLine($"Trying for {retryCount} time.");
-
                     var dbContext = scope.ServiceProvider.GetRequiredService<RepositoryContext>();
+                    var connectionString = dbContext.Database.GetDbConnection().ConnectionString; ;
+                    Console.WriteLine($"Trying for {++retryCount} time.");
+
                     dbContext.Database.EnsureCreated();
 
                     if (dbContext.Companies != null && dbContext.Companies.Any())

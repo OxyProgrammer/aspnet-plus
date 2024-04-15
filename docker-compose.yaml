@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  webapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"  # Map port 5000 on host to port 80 in the container
+    depends_on:
+      - sql-server-db  # Ensure the db container starts before the webapi container
+    environment:
+      - sqlConnection=server=sql-server-db;Database=ASPNETPlus;User=sa;Password=Rabbit#6578r; TrustServerCertificate=True; MultiSubnetFailover=True;
+
+  sql-server-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      MSSQL_SA_PASSWORD: "Rabbit#6578r"
+      ACCEPT_EULA: "Y"
