@@ -72,6 +72,10 @@ builder.Services.ConfigureRateLimitingOptions();
 
 //Swagger
 builder.Services.ConfigureSwagger();
+
+//Create and seend database
+builder.Services.CreateAndSeedDatabase();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

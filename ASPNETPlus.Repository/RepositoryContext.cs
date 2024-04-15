@@ -13,8 +13,9 @@ namespace ASPNETPlus.Repository
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new CompanyConfiguration());
-            modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
+            base.OnModelCreating(modelBuilder);
+            //modelBuilder.ApplyConfiguration(new CompanyConfiguration());
+            //modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
         }
 
         public DbSet<Company>? Companies { get; set; }
