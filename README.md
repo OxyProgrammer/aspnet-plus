@@ -28,7 +28,7 @@
 This repository contains a comprehensive ASP.NET Core Web API project showcasing following features of ASP.NET Core with .NET 8.
 
 #### Onion Architecture
-
+___
 <p align="center">
   <img src="Images/onion.png" alt="Onion Architecture Image" />
 </p>
@@ -37,7 +37,8 @@ Organized using Onion architecture principles to maintain modularity and separat
 [This](https://medium.com/expedia-group-tech/onion-architecture-deed8a554423) is a very good starting point, if you wish to learn more about Onion architecture.
 
 #### Logging using NLog
-
+___
+<br/>
 <p align="center">
   <img src="Images/nlog.jpg" alt="Onion Architecture Image" />
 </p>
@@ -46,48 +47,48 @@ Organized using Onion architecture principles to maintain modularity and separat
 ASPNETPlus displays detailed setup and configuration of NLog for logging in ASP.NET Core.
 
 #### Filters
-
+___
 ASP.NET filters are attributes that inject logic into the request pipeline, enabling global or selective application of cross-cutting concerns like authorization and validation in ASP.NET applications.
 
 #### Error Handling Best Practices
-
+___
 Exception handling in ASP.Net, conventionally has been dine using middleware. However with .Net 8, a more powerful way of exception handling is : [IExceptionHandler](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.diagnostics.iexceptionhandler?view=aspnetcore-8.0). ASPNETPlus showcases both ways.
 
 #### Content Negotiation
-
+___
 Content Negotiation in ASP.NET Core refers to the process of determining the most suitable content format (JSON, XML, etc.) to send in response to client requests based on the request headers. It allows APIs to provide data in different formats, enhancing interoperability and flexibility for clients consuming the API.
 ASPNETPlus showcases content negotiation for JSON, XML, and even custom format.
 
 #### Bulk Creation of Resources
-
+___
 Shows implementation of bulk creation endpoints using [Custom ModelBinder](https://learn.microsoft.com/en-us/aspnet/core/mvc/advanced/custom-model-binding?view=aspnetcore-8.0).
 
 #### Validation
-
+___
 Shows the various ways of request input validation using built-in ASP.NET Core features, including filters.
 
 #### Handling Parent-Child Relations
-
+___
 Shows strategies for handling entities with parent-child relations.
 
 #### HTTP Actions
-
+___
 Shows implementation of standard HTTP actions like GET, POST, PUT, DELETE, OPTIONS, HEAD.
 
 #### Advanced Data Handling
-
+___
 Features filtering, paging, searching, sorting, and data shaping to minimize network bandwidth.
 
 #### Rate Limiting and Throttling
-
+___
 Implementation of rate limiting and throttling for API endpoints.
 
 #### Versioning
-
+___
 API versioning to support backward compatibility.
 
 #### Documentation using Swagger
-
+___
 Integration with Swagger for API documentation.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -104,7 +105,7 @@ The database, tables and initial data seeding is automaticall done by the web ap
 For local environment, if you are facing db connection errors (especially named pipe error), I strongly suggest you to try basic trouble shooting using [this video](https://www.youtube.com/watch?v=rLL3LEIj2jM). If still you aren't able to get the db connection working, [do give a shout here](https://github.com/OxyProgrammer/aspnet-plus/issues), I will do the best to help you!
 
 ### Docker Desktop
-
+___
 This is not microservices, however if you don't wish to install MS SQL on your local machine and still want to run and test the WebAPI; using docker desktop is the best option you got. To run this project using Docker Desktop, follow these steps:
 
 - Clone the repository to your local machine:
@@ -142,7 +143,7 @@ This is not microservices, however if you don't wish to install MS SQL on your l
   Additionally, you should be able to access
 
   ```
-  http://localhost:5000/swagger/index.html:
+  http://localhost:5000/swagger/index.html
   ```
 
   <p align="center">
@@ -154,7 +155,7 @@ This is not microservices, however if you don't wish to install MS SQL on your l
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Visual Studio and MS SQL Database
-
+___
 To run this project using Visual Studio and MS SQL Database, follow these steps:
 
 - Clone the repository to your local machine:
@@ -174,11 +175,10 @@ To run this project using Visual Studio and MS SQL Database, follow these steps:
   http://localhost:5000/swagger
 
   ```
-
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Usage
-
+___
 Once the project is up and running, you can interact with the API endpoints to test the features showcased in this project. Here are some example requests:
 
 <!-- Provide examples of API requests and responses -->
