@@ -2,7 +2,7 @@
 
 <div align="center">
   <a href="https://github.com/OxyProgrammer/aspnet-plus">
-    <img src="Images/Logo.png" alt="Logo">
+    <img src="Images/logo.png" alt="Logo">
   </a>
   <br/>
   <h1 align="center"><u>ASPNet Plus</u></h1>
@@ -39,7 +39,7 @@ Organized using Onion architecture principles to maintain modularity and separat
 #### Logging using NLog
 
 <p align="center">
-  <img src="Images/NLog.jpg" alt="Onion Architecture Image" />
+  <img src="Images/nlog.jpg" alt="Onion Architecture Image" />
 </p>
 
 [NLog](https://nlog-project.org/documentation/) is a powerful logging framework that provides extensive logging capabilities for ASP.NET Web API applications. With NLog, developers can easily configure and manage logging levels, targets, and formats, allowing for comprehensive monitoring and analysis of application behavior. It offers flexibility in logging to various targets such as files, databases, and cloud services, making it a versatile choice for logging needs in ASP.NET Web API projects.
