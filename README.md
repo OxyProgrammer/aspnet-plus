@@ -107,10 +107,10 @@ Integration with [Swagger](https://learn.microsoft.com/en-us/aspnet/core/tutoria
 
 ## Setup
 
-The code can be run using either Docker Desktop or conventionally on your local machine using Visual Studio. The API use MS SQL aatabase and if you are going to run the code locally, you will need to have MS SQL Developer edition running on your machine.
-You may would like to install MS SQL Database Developer Edition from  [MS SQL Server downloads page](https://www.microsoft.com/en-us/sql-server/sql-server-downloads).
+The code can be executed using either Docker Desktop or conventionally on your local machine using Visual Studio. The API utilizes MS SQL database, and if you plan to run the code locally, you will need to have the MS SQL Developer edition installed on your machine. 
+You may want to install the MS SQL Database Developer Edition from the [MS SQL Server downloads page](https://www.microsoft.com/en-us/sql-server/sql-server-downloads). 
+The database, tables, and initial data seeding are automatically handled by the web API code during its first run. Please note that the connection strings are already present in the appsettings.json files:
 
-The database, tables and initial data seeding is automaticall done by the web api code during its firt time run. Please note the connection string are already present in the appsettings.json files:
 + For Docker Desktop: [appsettings.Production.json](https://github.com/OxyProgrammer/aspnet-plus/blob/main/ASPNETPlus/appsettings.Production.json)
 + For local build: [appsettings.Development.json](https://github.com/OxyProgrammer/aspnet-plus/blob/main/ASPNETPlus/appsettings.Development.json)
 
