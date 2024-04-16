@@ -33,7 +33,7 @@ WORKDIR /app
 COPY --from=build /app/out ./
 
 # Expose port 80 for the API
-EXPOSE 80
+EXPOSE 8080
 
 # Run the API when the container starts
 ENTRYPOINT ["dotnet", "ASPNETPlus.dll"]

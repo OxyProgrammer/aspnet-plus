@@ -58,7 +58,7 @@ namespace ASPNETPlus.Presentation.Controllers
         }
 
         [HttpPost("collection")]
-        public async Task<IActionResult> CreateCompanyCollection ([FromBody] IEnumerable<CompanyForCreationDto> companyCollection)
+        public async Task<IActionResult> CreateCompanyCollection([FromBody] IEnumerable<CompanyForCreationDto> companyCollection)
         {
             var result = await _service.CompanyService.CreateCompanyCollectionAsync(companyCollection);
             return CreatedAtRoute("CompanyCollection", new { result.ids }, result.companies);
@@ -79,5 +79,13 @@ namespace ASPNETPlus.Presentation.Controllers
             return NoContent();
         }
 
+        //This endpoint is created for halping with cases when we want to 
+        // test the api without connecting tot he database.
+        [HttpGet("test", Name = "Test")]
+        public IActionResult Test()
+        {
+            var stringCol = new[] { "Test1", "Test2" };
+            return Ok(stringCol);
+        }
     }
 }

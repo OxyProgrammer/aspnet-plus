@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "5000:80"  # Map port 5000 on host to port 80 in the container
+      - "5000:8080"  # Map port 5000 on host to port 80 in the container
     depends_on:
       - sql-server-db  # Ensure the db container starts before the webapi container
     environment:
