@@ -71,7 +71,7 @@ builder.Services.ConfigureRateLimitingOptions();
 //Swagger
 builder.Services.ConfigureSwagger();
 
-//Create and seend database
+//Create and seed database
 builder.Services.CreateAndSeedDatabase();
 
 var app = builder.Build();

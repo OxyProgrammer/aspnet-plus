@@ -134,7 +134,6 @@ namespace ASPNETPlus.Extensions
                 retryPolicy.Execute(() =>
                 {
                     var dbContext = scope.ServiceProvider.GetRequiredService<RepositoryContext>();
-                    var connectionString = dbContext.Database.GetDbConnection().ConnectionString; ;
                     Console.WriteLine($"Trying for {++retryCount} time.");
 
                     dbContext.Database.EnsureCreated();
